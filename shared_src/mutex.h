@@ -4,7 +4,7 @@
 #include <sys/ipc.h>
 #include <sys/sem.h>
 
-char const * const MUTEX_PATH;
+extern char const * const MUTEX_PATH;
 
 typedef struct {
   int id;

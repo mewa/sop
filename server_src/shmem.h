@@ -4,6 +4,7 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-char const * const SHARED_MEMORY_PATH;
+extern char const * const SHARED_MEMORY_PATH;
 
 int getShMem(int key, size_t size, void** shm);
+void rmShMem(int key, void* pmem);

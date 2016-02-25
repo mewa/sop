@@ -31,10 +31,11 @@ void mutex_unlock(mutex_t* mutex) {
     op.sem_op = 1;
     semop(mutex->id, &op, 1);
   }
-  val = semctl(mutex->id, 0, GETVAL);
 }
 
 void mutex_destroy(mutex_t* mutex) {
-  semctl(mutex->id, 0, IPC_RMID);
+  printf("mutex rm id: %d\n", mutex->id);
+  if (semctl(mutex->id, 0, IPC_RMID) < 0)
+    perror("Could not destroy mutex");
   free(mutex);
 }
