@@ -60,6 +60,9 @@ int main(int argc, char** argv) {
       case UNIT_TRAINING:
 	train_units(msg.mdata.data.training);
 	break;
+      case ATTACK:
+	attack(msg.mdata.data.attack);
+	break;
       default:
 	break;
       }

@@ -65,6 +65,24 @@ int main(int argc, char** argv) {
 	printf("1) Train\n");
 	printf("2) Attack\n");
 	break;
+      case ATTACK_RESULT:;
+	int attack_winner = msg.mdata.data.attack_result.winner_id;
+	printf("Player %d has won the battle\n", attack_winner);
+	sleep(3);
+	break;
+      case GAME_RESULT:;
+	int winner = msg.mdata.data.game_result.winner_id;
+
+	if (winner == id) {
+	  printf("Congratulations! You rekt 'em!\n");
+	} else {
+	  printf("Defeat...\n");
+	}
+	sleep(5);
+	exit(0);
+	break;
+      default:
+	break;
       }
     }
   } else {
@@ -119,6 +137,33 @@ int main(int argc, char** argv) {
 	}
    	break;
       case 2:
+	kill(pid, SIGSTOP);
+	
+	int linf, hinf, cav;
+	printf("Select attacking forces:\n");
+	printf("LInf: ");
+	scanf("%d", &linf);
+	printf("HInf: ");
+	scanf("%d", &hinf);
+	printf("Cav: ");
+	scanf("%d", &cav);
+
+	army_t attacker_army;
+	attacker_army.light = linf;
+	attacker_army.heavy = hinf;
+	attacker_army.cavalry = cav;
+	
+	mutex_lock(client_mutex);
+	if (status->army.light >= linf && status->army.heavy >= hinf && status->army.cavalry >= cav) {
+	  server_message_t attack_msg;
+	  attack_msg.mdata.action_type = ATTACK;
+	  attack_msg.mdata.data.attack.army = attacker_army;
+	  attack_msg.mdata.data.attack.attacker_id = id;
+	  send_message(&attack_msg, SERVER);
+	} else {
+	  printf("Not enough troops!\n");
+	}
+	mutex_unlock(client_mutex);
 	kill(pid, SIGCONT);
 	break;
       }
