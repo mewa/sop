@@ -34,7 +34,6 @@ void mutex_unlock(mutex_t* mutex) {
 }
 
 void mutex_destroy(mutex_t* mutex) {
-  printf("mutex rm id: %d\n", mutex->id);
   if (semctl(mutex->id, 0, IPC_RMID) < 0)
     perror("Could not destroy mutex");
   free(mutex);

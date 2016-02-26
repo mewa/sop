@@ -16,7 +16,6 @@ int getShMem(int key, size_t size, void** shm) {
     }
   }
   *shm = shmat(id, NULL, 0);
-  printf("shm(%d), token: 0x%x, addr: %p\n", id, token, *shm);
   return first;
 }
 

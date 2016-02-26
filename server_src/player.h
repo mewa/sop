@@ -11,3 +11,4 @@ extern int const BASE_RESOURCE_RATE;
 void generate_resources(int playerId);
 void start_game();
 void destroy_game();
+void train_units(training_t training);
