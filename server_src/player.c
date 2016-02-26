@@ -152,7 +152,9 @@ void attack(attack_t attack) {
     }
 
     mutex_lock(mutex[defender - 1]);
-    player->army = defender_army;
+    player->army.light += defender_army.light;
+    player->army.heavy += defender_army.heavy;
+    player->army.cavalry += defender_army.cavalry;
     mutex_unlock(mutex[defender - 1]);
     
     mutex_lock(mutex[attacker - 1]);
